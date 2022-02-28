@@ -31,9 +31,6 @@ def generate_maj_long(n):
 
     return time, profit
 
-    
-
-
 def generate_maj_short(n):
     n_maj = int(.8*n)
     n_min = n - n_maj
@@ -56,3 +53,15 @@ def generate_maj_short(n):
     random.shuffle(profit)
 
     return time, profit
+
+def generate_one_long(n):
+    # TODO
+    x = 0
+
+def generate_money_increase_log(n):
+    # TODO
+    x = 0
+
+def generate_money_increase_sqrt(n):
+    # TODO
+    x = 0
