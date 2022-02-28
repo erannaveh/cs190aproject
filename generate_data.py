@@ -7,7 +7,7 @@ def generate_random(n):
         t = random.randint(15, 120)
         time.append(t)
         profit.append(random.uniform(.8, 2.0)*t)
-    return time, profit
+    return zip(time, profit)
 
 def generate_maj_long(n):
     n_maj = int(.8*n)
@@ -29,7 +29,7 @@ def generate_maj_long(n):
     random.shuffle(time)
     random.shuffle(profit)
 
-    return time, profit
+    return zip(time, profit)
 
 def generate_maj_short(n):
     n_maj = int(.8*n)
@@ -52,7 +52,7 @@ def generate_maj_short(n):
     random.shuffle(time)
     random.shuffle(profit)
 
-    return time, profit
+    return zip(time, profit)
 
 def generate_one_long(n):
     # TODO
