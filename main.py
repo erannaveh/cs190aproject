@@ -1,14 +1,22 @@
 import generate_data as gd
 
+def calculate_lateness(schedule):
+    # input: schedule = list of tuples (time, profit, due_date)
+    x = 0
+    for flight in schedule:
+        x = 0
+
 def sort_data(data, sort_method):
     if sort_method == "ratio":
-        return sorted(data, key=lambda x: (x[0]/x[1]), reverse=True)
+        return sorted(data, key=lambda x: (x[0]/x[1]))
     if sort_method == "profit":
         return sorted(data, key=lambda x: x[1], reverse=True)
-    if sort_method == "time_asc":
-        return sorted(data, key=lambda x: x[0])
+    if sort_method == "dd_asc":
+        return sorted(data, lambda x: x[2])
     if sort_method == "time_desc":
         return sorted(data, key=lambda x: x[0], reverse=True)
+    if sort_method == "time_asc":
+        return sorted(data, key=lambda x: x[0])
 
 def schedule(n):
     data_random = gd.generate_random(n)
