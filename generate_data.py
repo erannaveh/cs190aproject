@@ -10,7 +10,8 @@ import random
 #     return zip(time, profit)
 
 def generate_random(n):
-    due_date = set()
+    due_date_set = set()
+    due_date = []
     time = []
     profit = []
     for _ in range(n):
@@ -20,15 +21,13 @@ def generate_random(n):
 
     sum_time = sum(time)
 
-    i = 0
-    while len(due_date) < n:
-        d = random.randint(0, 2 * sum_time)
-        while d < time[i]:
-            d = random.randint(0, 2 * sum_time)
-        if d not in due_date:
-            due_date.add(d)
-            i += 1
-            
+    for i in range(n):
+        d = random.randint(0, sum_time)
+        while d < time[i] or d in due_date_set:
+            d = random.randint(0, sum_time)
+        due_date.append(d)
+        due_date_set.add(d)
+
     return list(zip(time, profit, due_date))
 
 def generate_maj_long(n):
