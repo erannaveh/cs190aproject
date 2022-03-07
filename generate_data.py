@@ -30,13 +30,13 @@ def generate_maj_long(n):
     n_min = n - n_maj
 
     for _ in range(n_maj):
-        t = random.randint(300, 900)
+        t = random.randint(400, 900)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
     
     for _ in range(n_min):
-        t = random.randint(60, 300)
+        t = random.randint(60, 200)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
@@ -58,13 +58,13 @@ def generate_maj_short(n):
     n_min = n - n_maj
 
     for _ in range(n_min):
-        t = random.randint(300, 900)
+        t = random.randint(400, 900)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
     
     for _ in range(n_maj):
-        t = random.randint(60, 300)
+        t = random.randint(60, 200)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
