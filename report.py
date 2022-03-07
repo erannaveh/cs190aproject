@@ -1,4 +1,3 @@
-from importlib_metadata import method_cache
 from numpy import mean
 class Report:
     def __init__(self, data_set, method):

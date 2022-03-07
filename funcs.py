@@ -34,9 +34,11 @@ def sort_data(data, sort_method):
         return sorted(data, key=lambda x: x.time, reverse=True)
     if sort_method == "time_asc":
         return sorted(data, key=lambda x: x.time)
+    if sort_method == "urgency":
+        return sorted(data, key=lambda x: x.profit/x.due_date, reverse=True)
 
 def schedule(data, name, pct):
-    sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc"]
+    sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc", "urgent"]
     total_profits = [] 
     profit_ratios = []
     profit_diffs = []
@@ -59,8 +61,8 @@ def schedule(data, name, pct):
         print("Average (Lateness / Sum Of Flight Times): ",mean(lateness_ratios))
 
 def print_report(n, pct):
-    sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc"]
-    data_sets = ["random", "maj_long", "maj_short"]
+    sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc", "urgency"]
+    data_sets = ["random", "maj_long", "maj_short", "one_long", "money_increase_log", "money_increase_sqrt"]
     avgs = {}
     for i in data_sets:
         avgs[i] = {}
