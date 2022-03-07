@@ -83,66 +83,69 @@ def generate_one_long(n):
     # One really long flight, Many short flights 
 
     # List of randomly generated flight data, size n-1
-    flights = generate_random(n-1)
-
+    schedule = generate_random(n-1)
+    total_time = sum([i.time for i in schedule])
     # Create one long flight and attributes
-    long_flight = (0,0,0)
 
-    l = random.randint(300, 900)
-    p = random.uniform(.8, 2.0) * l
-
-    long_flight[0] = l
-    long_flight[1] = p
-
-    # Add to flights
-    flights.append(long_flight)
-
-    # Sum up total times of all flights
-    sum_time = 0
-    for fl in flights:
-        sum_time += fl[0]
+    t = random.randint(total_time // 2, total_time)
+    p = random.uniform(.8, 2.0) * t
+    long_flight = Flight(t, p)
     
     # Generate random due date of long flight now that we have all flight data
-    d = random.randInt(0, sum_time)
+    due_date_set = set([i.due_date for i in schedule])
+    d = random.randint(0, total_time)
+    while d < long_flight.time or d in due_date_set:
+        d = random.randint(0, total_time)
+    long_flight.set_due_date(d)
+    schedule.append(long_flight)
 
-    flights[-1][2] = d
-
-    return flights
+    return schedule
 
 def generate_money_increase_log(n):
-    new_n = int(n)
-    due_date = set()
-    time = []
-    profit = []
+    schedule = []
+    due_date_set = set()
 
-    for i in range(new_n):
+    for i in range(n):
         t = random.randint(60,900)
-        time.append(t)
-        profit.append(math.log(100+t) * random.uniform(.8, 1.2))
+        p = math.log(t) * random.uniform(.95, 1.05) * 100
+        schedule.append(Flight(t, p))
 
-    sum_time = sum(time)
-    i = 0
-    while len(due_date) < n:
+    sum_time = sum([i.time for i in schedule])
+    for flight in schedule:
         d = random.randint(0, sum_time)
-        while d < time[i]:
+        while d < flight.time or d in due_date_set:
             d = random.randint(0, sum_time)
-        if d not in due_date:
-            due_date.add(d)
-            i += 1
+        flight.set_due_date(d)
+        due_date_set.add(d)
 
-    return list(zip(time, profit, due_date))
+    return schedule
 
 def generate_money_increase_sqrt(n):
-    # TODO
-    x = 0
+    schedule = []
+    due_date_set = set()
+
+    for i in range(n):
+        t = random.randint(60,900)
+        p = math.sqrt(t) * random.uniform(.95, 1.05) * 15
+        schedule.append(Flight(t, p))
+
+    sum_time = sum([i.time for i in schedule])
+    for flight in schedule:
+        d = random.randint(0, sum_time)
+        while d < flight.time or d in due_date_set:
+            d = random.randint(0, sum_time)
+        flight.set_due_date(d)
+        due_date_set.add(d)
+
+    return schedule
 
 def get_data_sets(n):
     data =[
         (generate_random(n), "Random"),
         (generate_maj_long(n), "Majority Long"),
-        (generate_maj_short(n), "Majority Short")
-        # gd.generate_one_long(n),
-        # gd.generate_money_increase_log(n),
-        # gd.generate_money_increase_sqrt(n),
+        (generate_maj_short(n), "Majority Short"),
+        (generate_one_long(n), "One Long"),
+        (generate_money_increase_log(n), "Profit follows log(t)"),
+        (generate_money_increase_sqrt(n), "Profit follows sqrt(t)")
     ]
     return data
