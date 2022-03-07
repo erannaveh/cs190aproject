@@ -59,13 +59,6 @@ def schedule(data, name, pct):
         print("Average (Lateness / Sum Of Flight Times): ",mean(lateness_ratios))
 
 def print_report(n, pct):
-    # n = 100
-    # data = get_data_sets(n)
-    # pct = .0002
-    # for i in data:
-    #     schedule(i[0],i[1], pct)
-    #     print()
-
     sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc"]
     data_sets = ["random", "maj_long", "maj_short"]
     avgs = {}
