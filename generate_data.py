@@ -30,13 +30,13 @@ def generate_maj_long(n):
     n_min = n - n_maj
 
     for _ in range(n_maj):
-        t = random.randint(300, 900)
+        t = random.randint(400, 900)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
     
     for _ in range(n_min):
-        t = random.randint(60, 300)
+        t = random.randint(60, 200)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
@@ -58,17 +58,37 @@ def generate_maj_short(n):
     n_min = n - n_maj
 
     for _ in range(n_min):
-        t = random.randint(300, 900)
+        t = random.randint(400, 900)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
     
     for _ in range(n_maj):
-        t = random.randint(60, 300)
+        t = random.randint(60, 200)
         p = random.uniform(.8, 2.0)*t
         f = Flight(t, p)
         schedule.append(f)
 
+    sum_time = sum([i.time for i in schedule])
+    for flight in schedule:
+        d = random.randint(0, sum_time)
+        while d < flight.time or d in due_date_set:
+            d = random.randint(0, sum_time)
+        flight.set_due_date(d)
+        due_date_set.add(d)
+
+    return schedule
+
+def generate_money_increase_exp(n):
+    schedule = []
+    due_date_set = set()
+
+    for _ in range(n):
+        t = random.randint(60, 900)
+        p = random.uniform(.95, 1.05) * math.exp(t/100)
+        f = Flight(t, p)
+        schedule.append(f)
+    
     sum_time = sum([i.time for i in schedule])
     for flight in schedule:
         d = random.randint(0, sum_time)
@@ -146,6 +166,7 @@ def get_data_sets(n):
         (generate_maj_short(n), "Majority Short"),
         (generate_one_long(n), "One Long"),
         (generate_money_increase_log(n), "Profit follows log(t)"),
-        (generate_money_increase_sqrt(n), "Profit follows sqrt(t)")
+        (generate_money_increase_sqrt(n), "Profit follows sqrt(t)"),
+        (generate_money_increase_exp(n), "Profit follows exp(t)")
     ]
     return data
