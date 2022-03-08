@@ -62,7 +62,7 @@ def schedule(data, name, pct):
 
 def print_report(n, pct):
     sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc", "urgency"]
-    data_sets = ["random", "maj_long", "maj_short", "one_long", "money_increase_log", "money_increase_sqrt", "money_increase_exp"]
+    data_sets = ["random", "maj_long", "maj_short", "one_long", "money_increase_log", "money_increase_sqrt", "money_increase_exp", "long_and_short_dd"]
     avgs = {}
     for i in data_sets:
         avgs[i] = {}
