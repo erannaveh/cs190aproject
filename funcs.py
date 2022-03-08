@@ -16,7 +16,7 @@ def calculate_lateness(schedule, pct):
     for flight in schedule:
         lateness += flight.lateness
         profit = flight.profit
-        profit -= flight.time * pct * flight.lateness
+        profit -= flight.profit * pct * flight.lateness
         total_profit += profit
 
     return [total_profit, total_profit/max_profit, max_profit - total_profit, lateness, lateness/running_time]
@@ -61,8 +61,9 @@ def schedule(data, name, pct):
         print("Average (Lateness / Sum Of Flight Times): ",mean(lateness_ratios))
 
 def print_report(n, pct):
-    sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc", "urgency"]
-    data_sets = ["random", "maj_long", "maj_short", "one_long", "money_increase_log", "money_increase_sqrt", "money_increase_exp", "long_and_short_dd"]
+    # sort_methods = ["time_money_ratio_asc", "profit", "dd_asc", "time_desc", "time_asc", "urgency"]
+    sort_methods = ["profit", "time_money_ratio_asc", "dd_asc", "time_desc", "time_asc", "urgency"]
+    data_sets = ["random", "maj_long", "maj_short", "one_long", "money_increase_log", "money_increase_sqrt", "money_increase_exp", "long_and_short_dd", "short_dd", "long_dd"]
     avgs = {}
     for i in data_sets:
         avgs[i] = {}
@@ -82,7 +83,7 @@ def print_report(n, pct):
         for method in sort_methods:
             report = avgs[i][method]
             rs.add_report(report)
-            report.print_report()
+            # report.print_report()
         rs.print_stats()
         print()
 

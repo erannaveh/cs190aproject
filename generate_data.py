@@ -175,18 +175,59 @@ def generate_long_and_short_due_dates(n):
     for flight in schedule_short:
         d = random.randint(0, sum_time // 10)
         while d < flight.time or d in due_date_set:
-            d = random.randint(0, sum_time)
+            d = random.randint(0, sum_time // 10)
         flight.set_due_date(d)
         due_date_set.add(d)
 
     for flight in schedule_long:
         d = random.randint(int(.9 * sum_time), sum_time)
         while d < flight.time or d in due_date_set:
-            d = random.randint(0, sum_time)
+            d = random.randint(int(.9 * sum_time), sum_time)
+        flight.set_due_date(d)
+        due_date_set.add(d)
+    
+    return schedule
+
+def generate_short_due_dates(n):
+    schedule = []
+    due_date_set = set()
+
+    for _ in range(n):
+        t = random.randint(60, 900)
+        p = random.uniform(.8, 2.0)*t
+        f = Flight(t, p)
+        schedule.append(f)
+
+    sum_time = sum([i.time for i in schedule])
+    for flight in schedule:
+        d = random.randint(0, sum_time // 10)
+        while d < flight.time or d in due_date_set:
+            d = random.randint(0, sum_time // 10)
         flight.set_due_date(d)
         due_date_set.add(d)
 
     return schedule
+
+def generate_long_due_dates(n):
+    schedule = []
+    due_date_set = set()
+
+    for _ in range(n):
+        t = random.randint(60, 900)
+        p = random.uniform(.8, 2.0)*t
+        f = Flight(t, p)
+        schedule.append(f)
+
+    sum_time = sum([i.time for i in schedule])
+    for flight in schedule:
+        d = random.randint(int(.9*sum_time), sum_time)
+        while d < flight.time or d in due_date_set:
+            d = random.randint(int(.9*sum_time), sum_time)
+        flight.set_due_date(d)
+        due_date_set.add(d)
+
+    return schedule
+
 
 def get_data_sets(n):
     data =[
@@ -197,6 +238,8 @@ def get_data_sets(n):
         (generate_money_increase_log(n), "Profit follows log(t)"),
         (generate_money_increase_sqrt(n), "Profit follows sqrt(t)"),
         (generate_money_increase_exp(n), "Profit follows exp(t)"),
-        (generate_long_and_short_due_dates(n), "Long and Short Due Dates")
+        (generate_long_and_short_due_dates(n), "Long and Short Due Dates"),
+        (generate_short_due_dates(n), "Short Due Dates"),
+        (generate_long_due_dates(n), "Long Due Dates")
     ]
     return data
